@@ -1,0 +1,178 @@
+/* Custom styles for the portfolio */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #111827;
+    color: #f9fafb;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.dark-mode ::-webkit-scrollbar-track {
+    background: #374151;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+    background: #6b7280;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* Animation for skill bars */
+@keyframes fillBar {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: var(--skill-level);
+    }
+}
+
+.skill-bar {
+    animation: fillBar 1.5s ease-out forwards;
+}
+
+/* Hover effects for project cards */
+.project-card {
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Smooth transitions for navigation */
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+/* Custom focus styles */
+button:focus,
+input:focus,
+textarea:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: #3b82f6;
+}
+
+/* Loading animation for images */
+.image-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.dark-mode .image-loading {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200% 100%;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Dark mode specific styles */
+.dark-mode {
+    color-scheme: dark;
+}
+
+/* Enhanced transitions for dark mode toggle */
+.dark-mode-toggle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.05);
+}
+
+/* Improved form styling for dark mode */
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Enhanced button hover effects */
+.btn-primary {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .hero-title {
+        font-size: 4rem;
+    }
+}
+
+@media (min-width: 1025px) {
+    .hero-title {
+        font-size: 5rem;
+    }
+}
+
+/* Dark mode responsive adjustments */
+@media (max-width: 640px) {
+    .dark-mode .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .dark-mode .hero-title {
+        font-size: 4rem;
+    }
+}
+
+@media (min-width: 1025px) {
+    .dark-mode .hero-title {
+        font-size: 5rem;
+    }
+}
