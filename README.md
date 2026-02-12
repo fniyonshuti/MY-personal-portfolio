@@ -1,184 +1,71 @@
-# Software Engineer Portfolio
+# Personal Portfolio
 
-A modern, responsive portfolio website built with React and Tailwind CSS. This portfolio showcases your skills, projects, experience, and provides a professional way to connect with potential employers or clients.
+A responsive portfolio site built with React, Vite, and Tailwind CSS. It highlights projects, skills, and experience with a clean layout, smooth section navigation, and a dark mode toggle.
 
-## Features
+## Highlights
 
-- 🎨 **Modern Design**: Clean, professional design with smooth animations
-- 📱 **Responsive**: Fully responsive design that works on all devices
-- ⚡ **Fast**: Built with React and optimized for performance
-- 🎯 **SEO Friendly**: Proper semantic HTML structure
-- 📧 **Contact Form**: Ready-to-use contact form
-- 🔗 **Social Links**: Easy to add your social media profiles
-- 🎭 **Customizable**: Easy to personalize with your information
+- Responsive layout with mobile navigation
+- Dark mode toggle and smooth section scrolling
+- Project cards and expandable experience entries
+- Contact section with a styled (non-functional) form
 
-## Sections Included
+## Tech Stack
 
-1. **Hero Section**: Eye-catching introduction with call-to-action buttons
-2. **About**: Personal information and key statistics
-3. **Skills**: Technical skills with progress bars and technology grid
-4. **Projects**: Featured projects with images, descriptions, and links
-5. **Experience**: Work history and achievements
-6. **Contact**: Contact form and contact information
-7. **Footer**: Social media links and copyright
+- React 19
+- Vite 7
+- Tailwind CSS 4
+- ESLint 9
+
+## Project Structure
+
+- [src/App.jsx](src/App.jsx) main content, data arrays, and section layout
+- [src/App.css](src/App.css) component styling and custom overrides
+- [src/index.css](src/index.css) Tailwind import and global styles
+- [src/assets](src/assets) images used by the page
+- [public](public) static assets
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (version 14 or higher)
-- npm or yarn
+- Node.js 18 or later
+- npm
 
-### Installation
+### Install
 
-1. Clone or download this project
-2. Navigate to the project directory:
-   ```bash
-   cd timetracker
-   ```
-
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-5. Open your browser and visit `http://localhost:5173`
-
-## Customization Guide
-
-### Personal Information
-
-Edit the following in `src/App.jsx`:
-
-1. **Name and Title**: Update the hero section
-   ```jsx
-   <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6">
-     Hi, I'm <span className="text-blue-600">Your Name</span>
-   </h1>
-   ```
-
-2. **Profile Picture**: Replace the image URL in the hero section
-   ```jsx
-   <img
-     src="your-profile-picture-url"
-     alt="Your Name"
-     className="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-lg"
-   />
-   ```
-
-3. **About Section**: Update the description and statistics
-4. **Contact Information**: Update email, phone, and location
-5. **Social Media Links**: Update the footer links
-
-### Projects
-
-Update the `projects` array in `src/App.jsx`:
-
-```jsx
-const projects = [
-  {
-    id: 1,
-    title: "Your Project Title",
-    description: "Your project description",
-    technologies: ["React", "Node.js", "MongoDB"],
-    image: "your-project-image-url",
-    github: "your-github-link",
-    live: "your-live-demo-link"
-  },
-  // Add more projects...
-];
+```bash
+npm install
 ```
 
-### Skills
+### Run Locally
 
-Update the `skills` array:
-
-```jsx
-const skills = [
-  { name: "JavaScript", level: 90 },
-  { name: "React", level: 85 },
-  // Add more skills...
-];
+```bash
+npm run dev
 ```
 
-### Experience
+Open `http://localhost:5173` in your browser.
 
-Update the `experience` array:
+## Customization
 
-```jsx
-const experience = [
-  {
-    company: "Your Company",
-    position: "Your Position",
-    period: "2022 - Present",
-    description: "Your role description"
-  },
-  // Add more experience...
-];
-```
+Update content and data in [src/App.jsx](src/App.jsx):
 
-### Styling
+- Update the hero text, about section, and contact details
+- Replace project details in the `projects` array
+- Adjust skill levels in the `skills` array
+- Edit roles and responsibilities in the `experience` array
+- Swap images in [src/assets](src/assets) and update imports
 
-The portfolio uses Tailwind CSS for styling. You can:
+Styling adjustments live in [src/App.css](src/App.css) and [src/index.css](src/index.css).
 
-1. **Change Colors**: Update the color classes (e.g., `blue-600` to `green-600`)
-2. **Modify Layout**: Adjust grid layouts and spacing
-3. **Add Animations**: Enhance with additional CSS animations
-
-### Contact Form
-
-The contact form is currently for display. To make it functional, you'll need to:
-
-1. Add form handling logic
-2. Integrate with a backend service (e.g., EmailJS, Netlify Forms)
-3. Add form validation
-
-## Deployment
-
-### Build for Production
+## Build and Preview
 
 ```bash
 npm run build
+npm run preview
 ```
 
-### Deploy Options
+The production build is emitted to [dist](dist).
 
-1. **Netlify**: Drag and drop the `dist` folder
-2. **Vercel**: Connect your GitHub repository
-3. **GitHub Pages**: Use the `gh-pages` package
-4. **Firebase Hosting**: Use Firebase CLI
+## Deployment
 
-## Technologies Used
-
-- **React 19**: Modern React with hooks
-- **Tailwind CSS**: Utility-first CSS framework
-- **Vite**: Fast build tool
-- **ESLint**: Code linting
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Contributing
-
-Feel free to fork this project and customize it for your needs. If you find any bugs or have suggestions, please open an issue.
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## Support
-
-If you need help customizing your portfolio, feel free to reach out or check the documentation for the technologies used.
-
----
-
-**Happy coding! 🚀**
+Deploy the [dist](dist) folder to any static host (Netlify, Vercel, GitHub Pages, or similar).
