@@ -633,6 +633,19 @@ function App() {
       github: "https://github.com/fniyonshuti/curtains-ck.git",
       live: "https://curtains-ck.vercel.app/",
     },
+    {
+      id: 5,
+      title: "Personal Portfolio",
+      description:
+        "A responsive personal portfolio showcasing my projects, technical stack, professional experience, and ways to get in touch.",
+      technologies: ["React", "JavaScript", "Tailwind CSS", "Vite", "Vercel"],
+      categories: ["Web", "Portfolio"],
+      year: "2026",
+      role: "Frontend Developer",
+      image: profile,
+      github: "https://github.com/fniyonshuti/MY-personal-portfolio.git",
+      live: "https://my-personal-portfolio-theta-five.vercel.app/",
+    },
   ];
 
   const coreStack = [
