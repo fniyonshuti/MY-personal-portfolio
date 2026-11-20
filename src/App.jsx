@@ -532,8 +532,25 @@ function App() {
       },
       { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
     );
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    const observeRevealElements = (root) => {
+      if (root instanceof Element && root.matches(".reveal")) {
+        observer.observe(root);
+      }
+      root.querySelectorAll?.(".reveal").forEach((el) => observer.observe(el));
+    };
+    observeRevealElements(document);
+
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach(observeRevealElements);
+      });
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 
   // Triggers the About-section stat counters once, the first time they scroll into view.
@@ -1288,6 +1305,18 @@ function App() {
                     {filter}
                   </button>
                 ))}
+                {(projectFilter !== "All" || projectSearch.trim()) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setProjectFilter("All");
+                      setProjectSearch("");
+                    }}
+                    className={`project-filter rounded-full px-4 py-2 text-sm font-semibold transition ${isDarkMode ? "border border-gray-700 text-gray-300 hover:border-gray-500" : "border border-gray-300 text-gray-700 hover:border-gray-500"}`}
+                  >
+                    Reset filters
+                  </button>
+                )}
               </div>
             </div>
 
