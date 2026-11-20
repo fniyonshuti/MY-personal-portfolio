@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import profile from "./assets/profile.jpeg";
+import homepage from "./assets/portfolio-homepage.png";
 import learning from "./assets/learning.jpg";
 import careerConnect from "./assets/careerConnect.jpg";
 import competra from "./assets/competra.jpg";
 import curtainsCk from "./assets/curtains-ck.jpg";
+import profile from "./assets/profile.jpeg";
 import "./App.css";
 
 /* ------------------------------------------------------------------ */
@@ -390,6 +391,9 @@ function App() {
   const [paletteIndex, setPaletteIndex] = useState(0);
   const [isMac, setIsMac] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [projectSearch, setProjectSearch] = useState("");
+  const [projectFilter, setProjectFilter] = useState("All");
+  const [expandedProjects, setExpandedProjects] = useState({});
   const paletteInputRef = useRef(null);
 
   const apiBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
@@ -557,45 +561,6 @@ function App() {
   const projects = [
     {
       id: 1,
-      title: "Learning Management System",
-      description:
-        "A full-stack LMS that streamlines online education — course creation, enrollment, and progress tracking, with JWT auth and role-based access for instructors and students.",
-      technologies: [
-        "React",
-        "Python",
-        "FastAPI",
-        "PostgreSQL",
-        "Tailwind CSS",
-        "JWT",
-      ],
-      categories: ["Web", "Education"],
-      year: "2026",
-      role: "Full-Stack Developer",
-      image: learning,
-      github: "https://github.com/fniyonshuti/Learning-Management-System.git",
-      live: "https://github.com/fniyonshuti/Learning-Management-System.git",
-    },
-    {
-      id: 2,
-      title: "Career Connect",
-      description:
-        "A dynamic job-matching platform connecting job seekers with relevant opportunities alongside career development resources.",
-      technologies: [
-        "React",
-        "MongoDB",
-        "Express.js",
-        "Node.js",
-        "Tailwind CSS",
-      ],
-      categories: ["Web", "Career"],
-      year: "2026",
-      role: "Full-Stack Developer",
-      image: careerConnect,
-      github: "https://github.com/fniyonshuti/fullstack-project.git",
-      live: "https://github.com/fniyonshuti/fullstack-project.git",
-    },
-    {
-      id: 3,
       title: "Competra",
       description:
         "An ICT competency assessment platform that reviews GitHub evidence, scores theory answers, compares results with RTB benchmarks, and generates recommendations and downloadable reports.",
@@ -615,7 +580,7 @@ function App() {
       live: "https://rtb-graduate-project.vercel.app/",
     },
     {
-      id: 4,
+      id: 2,
       title: "C.K Business Ltd",
       description:
         "A furniture and interior-design storefront for curtains, sofas, office services, and practical workspace solutions, with product browsing and cart functionality.",
@@ -634,7 +599,7 @@ function App() {
       live: "https://curtains-ck.vercel.app/",
     },
     {
-      id: 5,
+      id: 3,
       title: "Personal Portfolio",
       description:
         "A responsive personal portfolio showcasing my projects, technical stack, professional experience, and ways to get in touch.",
@@ -642,7 +607,7 @@ function App() {
       categories: ["Web", "Portfolio"],
       year: "2026",
       role: "Frontend Developer",
-      image: profile,
+      image: homepage,
       github: "https://github.com/fniyonshuti/MY-personal-portfolio.git",
       live: "https://my-personal-portfolio-theta-five.vercel.app/",
     },
@@ -852,6 +817,23 @@ function App() {
   const textHeading = isDarkMode ? "text-white" : "text-gray-900";
   const borderColor = isDarkMode ? "border-gray-800" : "border-gray-200";
   const cardBg = isDarkMode ? "bg-[#111111]" : "bg-white";
+
+  const projectFilters = [
+    "All",
+    ...new Set(projects.flatMap((project) => project.categories)),
+  ];
+  const filteredProjects = projects.filter((project) => {
+    const searchText =
+      `${project.title} ${project.description} ${project.technologies.join(
+        " ",
+      )} ${project.categories.join(" ")}`.toLowerCase();
+    const matchesSearch = searchText.includes(
+      projectSearch.trim().toLowerCase(),
+    );
+    const matchesFilter =
+      projectFilter === "All" || project.categories.includes(projectFilter);
+    return matchesSearch && matchesFilter;
+  });
 
   return (
     <div className={`min-h-screen font-sans ${isDarkMode ? "dark-mode" : ""}`}>
@@ -1267,86 +1249,171 @@ function App() {
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-14">
-            <h2 className={`text-3xl sm:text-4xl font-bold ${textHeading}`}>
+            <h2
+              className={`text-3xl sm:text-4xl font-bold mb-6 ${textHeading}`}
+            >
               Featured Projects
             </h2>
-          </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
-              <article
-                key={project.id}
-                className={`project-card reveal rounded-2xl border overflow-hidden transition-all duration-300 ${isDarkMode ? "border-gray-800 bg-[#111111]" : "border-gray-200 bg-white"}`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Open ${project.title} project`}
-                  className="project-preview block relative h-52 sm:h-56 overflow-hidden"
+            <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+              <label className="project-search relative flex-1 max-w-md">
+                <span className="sr-only">Search projects</span>
+                <span
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                  aria-hidden="true"
                 >
-                  <img
-                    src={project.image}
-                    alt={`${project.title} homepage preview`}
-                    className="project-preview-image w-full h-full object-cover object-top"
-                  />
-                  <span className="project-year absolute top-4 left-4">
-                    {project.year}
-                  </span>
-                  <span className="project-open-overlay absolute inset-0 flex items-center justify-center">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
-                      Open Project <IconArrowUpRight className="w-4 h-4" />
-                    </span>
-                  </span>
-                </a>
+                  ⌕
+                </span>
+                <input
+                  type="search"
+                  value={projectSearch}
+                  onChange={(event) => setProjectSearch(event.target.value)}
+                  placeholder="Search projects or technologies..."
+                  className={`project-search-input w-full rounded-xl border py-3 pl-11 pr-4 text-sm outline-none transition ${isDarkMode ? "border-gray-800 bg-[#111111] text-white placeholder:text-gray-500" : "border-gray-200 bg-white text-gray-900 placeholder:text-gray-400"}`}
+                />
+              </label>
 
-                <div className="p-5 sm:p-6">
-                  <h3
-                    className={`text-xl font-bold leading-tight mb-3 ${textHeading}`}
+              <div
+                className="flex flex-wrap gap-2"
+                aria-label="Filter projects by category"
+              >
+                {projectFilters.map((filter) => (
+                  <button
+                    key={filter}
+                    type="button"
+                    onClick={() => setProjectFilter(filter)}
+                    aria-pressed={projectFilter === filter}
+                    className={`project-filter rounded-full px-4 py-2 text-sm font-semibold transition ${projectFilter === filter ? "bg-blue-600 text-white shadow-md" : isDarkMode ? "border border-gray-800 bg-[#111111] text-gray-300 hover:border-gray-600" : "border border-gray-200 bg-white text-gray-700 hover:border-gray-400"}`}
                   >
-                    {project.title}
-                  </h3>
+                    {filter}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {project.categories.map((category) => (
-                      <span
-                        key={category}
-                        className={`rounded-md px-2.5 py-1 text-xs ${isDarkMode ? "bg-gray-900 text-gray-400" : "bg-gray-100 text-gray-600"}`}
-                      >
-                        {category}
-                      </span>
-                    ))}
-                  </div>
-
-                  <p
-                    className={`font-mono text-[11px] uppercase tracking-wider mb-5 ${textMuted}`}
-                  >
-                    {project.role}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="project-primary-action inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
-                    >
-                      <IconArrowUpRight className="w-4 h-4" /> Visit Site
-                    </a>
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`project-secondary-action inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold transition-colors ${isDarkMode ? "border-gray-700 text-gray-100 hover:border-gray-500" : "border-gray-300 text-gray-800 hover:border-gray-500"}`}
-                    >
-                      View Code <span aria-hidden="true">→</span>
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
+            <p className={`mt-4 text-sm ${textMuted}`} aria-live="polite">
+              Showing {filteredProjects.length} of {projects.length} projects
+            </p>
           </div>
+
+          {filteredProjects.length > 0 ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProjects.map((project, index) => (
+                <article
+                  key={project.id}
+                  className={`project-card reveal rounded-2xl border overflow-hidden transition-all duration-300 ${isDarkMode ? "border-gray-800 bg-[#111111]" : "border-gray-200 bg-white"}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open ${project.title} project`}
+                    className="project-preview block relative h-52 sm:h-56 overflow-hidden"
+                  >
+                    <img
+                      src={project.image}
+                      alt={`${project.title} homepage preview`}
+                      className="project-preview-image w-full h-full object-cover object-top"
+                    />
+                    <span className="project-year absolute top-4 left-4">
+                      {project.year}
+                    </span>
+                    <span className="project-open-overlay absolute inset-0 flex items-center justify-center">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
+                        Open Project <IconArrowUpRight className="w-4 h-4" />
+                      </span>
+                    </span>
+                  </a>
+
+                  <div className="p-5 sm:p-6">
+                    <h3
+                      className={`text-xl font-bold leading-tight mb-3 ${textHeading}`}
+                    >
+                      {project.title}
+                    </h3>
+
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {project.categories.map((category) => (
+                        <span
+                          key={category}
+                          className={`rounded-md px-2.5 py-1 text-xs ${isDarkMode ? "bg-gray-900 text-gray-400" : "bg-gray-100 text-gray-600"}`}
+                        >
+                          {category}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className={`text-sm leading-relaxed ${textMuted}`}>
+                      {expandedProjects[project.id]
+                        ? project.description
+                        : `${project.description.slice(0, 105)}${project.description.length > 105 ? "..." : ""}`}
+                    </p>
+                    {project.description.length > 105 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedProjects((previous) => ({
+                            ...previous,
+                            [project.id]: !previous[project.id],
+                          }))
+                        }
+                        className="project-read-more mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                        aria-expanded={Boolean(expandedProjects[project.id])}
+                      >
+                        {expandedProjects[project.id]
+                          ? "Read Less"
+                          : "Read More"}
+                      </button>
+                    )}
+
+                    <p
+                      className={`font-mono text-[11px] uppercase tracking-wider mb-3 ${textMuted}`}
+                    >
+                      {project.role}
+                    </p>
+
+                    <div
+                      className="flex flex-wrap gap-2 mb-6"
+                      aria-label="Technologies used"
+                    >
+                      {project.technologies.map((technology) => (
+                        <span
+                          key={technology}
+                          className={`project-tech-tag rounded-md px-2.5 py-1 text-xs ${isDarkMode ? "bg-gray-900 text-gray-300" : "bg-gray-100 text-gray-700"}`}
+                        >
+                          {technology}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="project-primary-action inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+                      >
+                        <IconArrowUpRight className="w-4 h-4" /> Visit Site
+                      </a>
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`project-secondary-action inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold transition-colors ${isDarkMode ? "border-gray-700 text-gray-100 hover:border-gray-500" : "border-gray-300 text-gray-800 hover:border-gray-500"}`}
+                      >
+                        View Code <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className={`text-center py-10 text-sm ${textMuted}`}>
+              No projects found matching your criteria.
+            </p>
+          )}
         </div>
       </section>
 
